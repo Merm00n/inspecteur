@@ -1,38 +1,212 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: "Changa";
+  src: url('./assets/fonts/Changa-Medium.ttf') format('truetype');
+}
+*{
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+  font-family: "Changa";
+}
+html{
+  height: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.container{
+  margin: 0;
+  padding: 0;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  flex-direction: row;
+  justify-content: right;
+  height: 100%;
+  
+  
+}
+.logoE-N2{
+  display: none;
 }
 
-.App-link {
-  color: #61dafb;
+
+/*-----sidebar css -----*/
+.SideBar{
+ 
+  background-color: #ffffff;
+  box-shadow: -3px 0px 10px 1px #DDB660;
+}
+.logoE-N{
+  text-align: center;
+  line-height: 70px;
+  user-select: none;
+  padding-top: 8%;
+ 
+
+}
+.navlink{
+  color: #284A68;
+  font-weight: bold;
+}
+.link{
+  display: flex;
+  height: 50px;
+  line-height: 50px;
+  width: 100%;
+  box-sizing: border-box;
+  
+
+}
+.links{
+  margin-top: 20%;
+  background-color: white;
+  margin-right: 5%;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.l-ink{
+  width:165px;
+
 }
+.icon{
+  width: 20px;
+  margin-top: 15px;
+}
+
+.icon-1{
+  padding-left: 10px;
+}
+a.active{
+  color: #DDB660;
+  border-left: 10px solid #DDB660;
+}
+
+a{
+  padding-left:0px;
+  cursor: pointer;
+  display: flex;
+  justify-content: end;
+}
+.foot{
+  
+  display: grid;
+  grid-template-areas:
+  "exit admin"
+  "exit name";
+}
+.admin{
+  font-weight: bold;
+  text-align: end;
+  padding-right: 35px;
+  grid-area: admin;
+}
+.admin-name{
+  text-align: end;
+  padding-right: 35px;
+  color: rgb(120, 120, 120);
+  font-size: 10pt;
+  grid-area: name;
+
+}
+.exit{
+  grid-area: exit;
+  padding-left: 40px;
+}
+.exit-Button{
+  border: none;
+  background-color: white;
+}
+.logo2{
+  display: none;
+}
+.i3,.i4,.i6{
+  width: 23px;
+}
+.i2{
+  margin-right: 2px;
+  width: 19px;
+}
+.i1{
+  margin-right: 2px;
+  width: 21px;
+}
+.i5{
+  width: 19px;
+  margin-right:1.5px ;
+}
+.i7{
+  margin-right: 1px;
+}
+@media screen and (max-width:1130px){
+  .SideBar{
+    height: max-content;
+  }
+ 
+  .control{
+    display: none;
+  }
+  .admin,.admin-name{
+    display: none;
+  }
+  .logoe{
+    display: none;
+  }
+  .logo2{
+    display: block;
+    
+  }
+  
+  .foot{
+    padding-top: 10vh;
+    padding-bottom: 52vh;
+
+  }
+  
+  .links{
+    padding-top: 30%;
+  
+ 
+  }
+  
+  a.active{
+    border-left: 6px solid #DDB660;
+  }
+  
+  .icon{
+    width: 100%;
+    margin-top: 0;
+    padding: 1vh;
+
+   
+    
+  }
+  .icon-1{
+    margin-right: 25%;
+   
+  }
+ .link{
+  margin-bottom: 2vh;
+ }
+ .i2{
+  width: 96%;
+  margin-left: 1px;
+ }
+ .i3{
+  margin-left: 2px;
+ }
+ .i4{
+  margin-left: 2px;
+ }
+ .i6{
+  margin-left: 2px;
+ }
+ .i7{
+  margin-right: 2px;
+ }
+ .exit{
+  padding-left: 5px;
+ }
+ 
+
+  
+} 
+
+
