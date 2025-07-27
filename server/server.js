@@ -4,7 +4,9 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const { addProf, getProf, deletProf } = require('./routes/profRoutes');
-const { addInfo } = require ('./routes/infoProf');
+const { addInfo, getInfo,updateInfo } = require ('./routes/infoProf');
+const db = require('./db');
+
 
 // Import des fonctions
 const { addEtablissement, getAllEtablissements, deleteEtablissement } = require('./routes/etabRoutes');
@@ -33,6 +35,18 @@ app.post('/add-prof', addProf );
 app.get('/all-prof/:etabId', getProf);
 app.delete('/delete-prof/:id', deletProf);
 app.post('/add-info/:profId', addInfo);
+app.get('/get-info/:profId', getInfo);
+app.put('/update-info/:profId',updateInfo ); // Utilisé pour la mise à jour
+// app.get('/delete-table3', (req, res) => {
+//   db.run("DROP TABLE IF EXISTS info", (err) => {
+//     if (err) {
+//       return res.status(500).json({ error: "Erreur suppression table", err });
+//     }
+//     res.json({ message: "Table infoprofs supprimée ✅" });
+//   });
+// });
+
+
 
 
 app.listen(PORT, () => {

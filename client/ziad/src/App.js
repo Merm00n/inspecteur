@@ -5,6 +5,8 @@ import Etablissement from './pages/gestion/etablissement/Etablissement';
 import Prof from "./pages/gestion/prof/Prof"
 import InfoProf from './pages/gestion/infoProf/InfoProf';
 import Etablissement2 from './pages/consulter/etablissement/Etablissement';
+import Prof2 from './pages/consulter/prof/Prof';
+import InfoProf2 from './pages/consulter/infoProf/InfoProf';
 import { Toaster } from "react-hot-toast";
   const routes = (
     <Router>
@@ -14,6 +16,11 @@ import { Toaster } from "react-hot-toast";
         <Route path="/g_etablissement/:etabId/:etab" exact element={<Prof />} />
         <Route path='/g_etablissement/:etabId/:etab/:profId/:prof' exact element={<InfoProf />} />
         <Route path='/etablissements' exact element={<Etablissement2 />} />
+        <Route path='/etablissements/:etabId/:etab' exact element={<Prof2 />} />
+        <Route path='/etablissements/:etabId/:etab/:profId/:prof' exact element={<InfoProf2 />} />
+
+        
+
 
       </Routes>
     </Router>

@@ -91,6 +91,10 @@ form{
     width:80%;
   
 }
+.text2 {
+box-shadow: -2px 0px 8px 1px #284A62;
+
+}
 
 .informations-contr-1{
     border-radius: 10px;
@@ -104,6 +108,10 @@ form{
     color: #284A68;
     font-weight: bold;
     
+}
+.animate-gradient {
+  background: linear-gradient(90deg, #DDB660 0%, transparent 50%, #DDB660 100%);
+  background-size: 200% 100%;
 }
 .button2{
     margin-left:8vw ;

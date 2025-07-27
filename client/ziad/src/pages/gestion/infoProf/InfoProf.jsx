@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import direction from "../../../assets/icons/direction.svg";
 import "./infoprof.css";
@@ -9,48 +9,118 @@ import toast from "react-hot-toast";
 function InfoProf() {
   const { etabId, etab, profId, prof } = useParams();
 
-  const [formData, setFormData] = useState({
-    nom: "",
-    prenom: "",
-    echelon: "", // Ajouté
-    email: "",
-    situation: "Titulaire",
-    niveaux: [],
-    derniereVisite: "", // Ajouté
-    note: "", // Ajouté
-  });
+  const [nom, setNom] = useState("");
+  const [prenom, setPrenom] = useState("");
+  const [echelon, setEchelon] = useState("");
+  const [email, setEmail] = useState("");
+  const [derniereVisite, setDerniereVisite] = useState("");
+  const [note, setNote] = useState("");
+  const [situation, setSituation] = useState("");
+  const [niveaux, setNiveaux] = useState([]);
+  const [isUpdate, setIsUpdate] = useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  // ✅ Vérifier si des infos existent
+  useEffect(() => {
+    const fetchInfo = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/get-info/${profId}`);
+        const data = response.data;
+
+        if (data && Object.keys(data).length > 0) {
+          setNom(data.nom || "");
+          setPrenom(data.prenom || "");
+          setEchelon(data.echelon || "");
+          setEmail(data.email || "");
+          setDerniereVisite(data.derniereVisite || "");
+          setNote(data.note || "");
+          setSituation(data.situation || "");
+          setNiveaux(data.niveaux ? data.niveaux.split(", ") : []);
+          setIsUpdate(true);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la récupération :", error);
+        toast.error("Erreur lors de la récupération des données");
+      }
+    };
+
+    fetchInfo();
+  }, [profId]);
 
   const handleNiveauChange = (niveau) => {
-    setFormData((prev) => {
-      if (prev.niveaux.includes(niveau)) {
-        return { ...prev, niveaux: prev.niveaux.filter((n) => n !== niveau) };
-      } else {
-        return { ...prev, niveaux: [...prev.niveaux, niveau] };
-      }
-    });
+    setNiveaux((prev) =>
+      prev.includes(niveau) ? prev.filter((n) => n !== niveau) : [...prev, niveau]
+    );
   };
 
+  // ✅ Vérifications des champs
+  const validateForm = () => {
+    if (!nom || !prenom || !echelon || !email || !derniereVisite || !note || !situation || niveaux.length === 0) {
+      toast.error("Veuillez remplir tous les champs");
+      return false;
+    }
+    if (parseInt(echelon) > 12) {
+      toast.error("L'échelon ne doit pas dépasser 12");
+      return false;
+    }
+    if (parseInt(note) > 20) {
+      toast.error("La note ne doit pas dépasser 20");
+      return false;
+    }
+    const today = new Date().toISOString().split("T")[0];
+    if (derniereVisite > today) {
+      toast.error("La date ne peut pas dépasser la date d'aujourd'hui");
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error("Veuillez entrer un email valide");
+      return false;
+    }
+    return true;
+  };
+
+  // ✅ Enregistrer pour la première fois
   const handleSave = async () => {
+    if (!validateForm()) return;
+
     try {
       await axios.post(`http://localhost:5000/add-info/${profId}`, {
-        nom: formData.nom,
-        prenom: formData.prenom,
-        echelon: formData.echelon,
-        adresse: formData.email,
-        situation: formData.situation,
-        niveau: formData.niveaux.join(", "),
-        derniereVisite: formData.derniereVisite,
-        note: formData.note,
+        nom,
+        prenom,
+        echelon,
+        email,
+        derniereVisite,
+        note,
+        situation,
+        niveaux: niveaux.join(", ")
       });
-      toast.success("Informations ajoutées ✅");
+      toast.success("Informations enregistrées ✅");
+      setIsUpdate(true);
     } catch (error) {
-      toast.error("Erreur lors de l'ajout");
       console.error(error);
+      toast.error("Erreur lors de l'enregistrement");
+    }
+  };
+
+  // ✅ Modifier les infos
+  const handleUpdate = async () => {
+    if (!validateForm()) return;
+
+    try {
+      await axios.put(`http://localhost:5000/update-info/${profId}`, {
+        nom,
+        prenom,
+        echelon,
+        email,
+        derniereVisite,
+        note,
+        situation,
+        niveaux: niveaux.join(", ")
+      });
+      toast.success("Informations mises à jour ✅");
+    } catch (error) {
+      console.error(error);
+      toast.error("Erreur lors de la mise à jour des données");
     }
   };
 
@@ -60,115 +130,119 @@ function InfoProf() {
         <SideBar />
       </div>
 
-      <div className="w-full flex flex-col">
-        <div className="title">
+      <div dir="rtl" className="w-full overflow-x-hidden overflow-y-scroll flex flex-col">
+        <div dir="ltr" className="title">
           <div className="title-1">Gestion</div>
         </div>
 
-        <div>
-          <div className="content">
-            <Link className="soustitle" to="/g_etablissement">
-              <div>Les Etablissements</div>
-            </Link>
-            <div className="path">
-              <img src={direction} alt="Direction" />
-            </div>
-            <Link to={`/g_etablissement/${etabId}/${etab}`} className="lien">
-              <div>{etab}</div>
-            </Link>
-            <div className="path">
-              <img src={direction} alt="Direction" />
-            </div>
-            <div className="lien">{prof}</div>
+        {/* Fil d'ariane */}
+        <div className="content">
+          <Link className="soustitle" to="/g_etablissement">
+            <div>Les Etablissements</div>
+          </Link>
+          <div className="path">
+            <img src={direction} alt="Direction" />
           </div>
+          <Link to={`/g_etablissement/${etabId}/${etab}`} className="lien">
+            <div>{etab}</div>
+          </Link>
+          <div className="path">
+            <img src={direction} alt="Direction" />
+          </div>
+          <div className="lien">{prof}</div>
         </div>
 
-        <div className="flex">
+        {/* Formulaire */}
+        <div className="flex" dir="ltr">
           <div className="flex flex-col w-1/5 gap-y-6 justify-center items-center">
-            <div className="addcontr">
+            {!isUpdate && (
               <button className="button2 w-52 py-3" onClick={handleSave}>
                 Enregistrer
               </button>
-            </div>
+            )}
+            {isUpdate && (
+              <button className="button2 w-52 py-3" onClick={handleUpdate}>
+                Enregistrer les modifications
+              </button>
+            )}
           </div>
 
           <div className="w-full flex justify-center items-center" dir="ltr">
-            <div className="info-contr w-[70%] p-6 mt-10">
+            <div className="info-contr mb-5 w-[70%] p-6 mt-10">
               <form className="flex flex-col gap-y-4 w-full">
-                {/* Champs texte */}
-                {[
-                  { id: "nom", label: "Nom", name: "nom" },
-                  { id: "prenom", label: "Prénom", name: "prenom" },
-                  {
-                    id: "echelon",
-                    label: "Echelon",
-                    name: "echelon",
-                    type: "number",
-                    min: 1,
-                    max: 12,
-                  },
-                  { id: "email", label: "Adresse email", name: "email" },
-                ].map(({ id, label, name, type = "text", min, max }) => (
-                  <div key={id} className="flex items-center w-full">
-                    <label htmlFor={id} className="label-3 text-[14pt] w-[30%]">
-                      {label}
-                    </label>
-                    <input
-                      id={id}
-                      name={name}
-                      type={type}
-                      min={min}
-                      max={max}
-                      className="input-contr-1 p-2 px-2 w-[70%]"
-                      value={formData[name]}
-                      onChange={handleChange}
-                    />
-                  </div>
-                ))}
+                {/* Nom */}
+                <div className="flex items-center w-full">
+                  <label className="label-3 text-[14pt] w-[30%]">Nom</label>
+                  <input
+                    type="text"
+                    className="input-contr-1 p-2 px-2 w-[70%]"
+                    value={nom}
+                    onChange={(e) => setNom(e.target.value)}
+                  />
+                </div>
+
+                {/* Prénom */}
+                <div className="flex items-center w-full">
+                  <label className="label-3 text-[14pt] w-[30%]">Prénom</label>
+                  <input
+                    type="text"
+                    className="input-contr-1 p-2 px-2 w-[70%]"
+                    value={prenom}
+                    onChange={(e) => setPrenom(e.target.value)}
+                  />
+                </div>
+
+                {/* Echelon */}
+                <div className="flex items-center w-full">
+                  <label className="label-3 text-[14pt] w-[30%]">Echelon</label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="12"
+                    className="input-contr-1 p-2 px-2 w-[70%]"
+                    value={echelon}
+                    onChange={(e) => setEchelon(e.target.value)}
+                  />
+                </div>
+
+                {/* Email */}
+                <div className="flex items-center w-full">
+                  <label className="label-3 text-[14pt] w-[30%]">Email</label>
+                  <input
+                    type="email"
+                    className="input-contr-1 p-2 px-2 w-[70%]"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
 
                 {/* Dernière visite */}
                 <div className="flex items-center w-full">
-                  <label
-                    htmlFor="derniereVisite"
-                    className="label-3 text-[14pt] w-[30%]"
-                  >
-                    Dernière visite
-                  </label>
+                  <label className="label-3 text-[14pt] w-[30%]">Dernière visite</label>
                   <input
-                    id="derniereVisite"
-                    name="derniereVisite"
                     type="date"
                     className="input-contr-1 p-2 px-2 w-[70%]"
-                    value={formData.derniereVisite}
-                    onChange={handleChange}
+                    value={derniereVisite}
+                    onChange={(e) => setDerniereVisite(e.target.value)}
                   />
                 </div>
 
                 {/* Note */}
                 <div className="flex items-center w-full">
-                  <label
-                    htmlFor="note"
-                    className="label-3 text-[14pt] w-[30%]"
-                  >
-                    Note (max 20)
-                  </label>
+                  <label className="label-3 text-[14pt] w-[30%]">Note</label>
                   <input
-                    id="note"
-                    name="note"
                     type="number"
                     min="0"
                     max="20"
                     className="input-contr-1 p-2 px-2 w-[70%]"
-                    value={formData.note}
-                    onChange={handleChange}
+                    value={note}
+                    onChange={(e) => setNote(e.target.value)}
                   />
                 </div>
 
                 {/* Situation administrative */}
                 <div className="items-start w-full">
-                  <label className="label-3 text-[14pt] w-[30%] mt-1">
-                    Situation administrative
-                  </label>
+                  <label className="label-3 text-[14pt] w-[30%] mt-1">Situation administrative</label>
                   <div className="w-[70%] flex justify-around mt-3 gap-1">
                     {["Titulaire", "Vacataire", "En stage"].map((option) => (
                       <label key={option} className="flex items-center gap-2">
@@ -176,8 +250,8 @@ function InfoProf() {
                           type="radio"
                           name="situation"
                           value={option}
-                          checked={formData.situation === option}
-                          onChange={handleChange}
+                          checked={situation === option}
+                          onChange={() => setSituation(option)}
                         />
                         {option}
                       </label>
@@ -187,16 +261,14 @@ function InfoProf() {
 
                 {/* Niveaux pris en charge */}
                 <div className="items-start w-full">
-                  <label className="label-3 text-[14pt] w-[30%] mt-1">
-                    Niveaux pris en charge
-                  </label>
+                  <label className="label-3 text-[14pt] w-[30%] mt-1">Niveaux pris en charge</label>
                   <div className="w-[70%] flex justify-around mt-3 gap-1">
                     {["1AM", "2AM", "3AM", "4AM"].map((niveau) => (
                       <label key={niveau} className="flex items-center gap-2">
                         <input
                           type="checkbox"
                           value={niveau}
-                          checked={formData.niveaux.includes(niveau)}
+                          checked={niveaux.includes(niveau)}
                           onChange={() => handleNiveauChange(niveau)}
                         />
                         {niveau}

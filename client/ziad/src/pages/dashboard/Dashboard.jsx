@@ -20,7 +20,7 @@ const Dashboard = () => {
 
             <div className='time w-[50%] h-96'>
                 
-                    <div className='text-[24pt] text-[#DDB660]  pt-[20px] text-center '> L'Inspecteur  </div><div className='flex justify-center'><div className='text-center text-[28pt] text-[#DDB660] pb-[20px]'>ZIAD Abderahmane <br/> Aziz</div> </div>
+                    <div className='text-[24pt] text-[#DDB660]  pt-[20px] text-center '> L'Inspecteur  </div><div className='flex justify-center'><div className='text-center text-[28pt] text-[#DDB660] pb-[20px]'>ZIAD Abderrahmane <br/> Aziz</div> </div>
                     <div className='w-full flex justify-center items-center'>
                     <div className='barre-time'></div>
                    </div>
