@@ -28,7 +28,40 @@ const Etablissement = () => {
     fetchEtabs();
   }, []);
 
- 
+  // ✅ Suppression avec confirmation toast
+  const handleDelete = (id) => {
+   
+    toast((t) => (
+      <div className="text-center">
+        <p className="font-semibold mb-2">Supprimer cet établissement ?</p>
+        <div className="flex justify-center gap-4 mt-2">
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              // Lance la suppression
+              toast.promise(
+                axios.delete(`http://localhost:5000/delete/${id}`),
+                {
+                  loading: "Suppression en cours...",
+                  success: "Établissement supprimé ✅",
+                  error: "Erreur lors de la suppression ❌",
+                }
+              ).then(() => fetchEtabs());
+            }}
+            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+          >
+            Oui
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400"
+          >
+            Non
+          </button>
+        </div>
+      </div>
+    ), { duration: 4000 });
+  };
 
   return (
     <>
@@ -64,7 +97,7 @@ const Etablissement = () => {
               <div className='flex justify-center text-center w-[100%]'>
                 <div className='flex flex-row-reverse justify-between w-full mt-10 mb-5 mr-10' dir='ltr'>
                   <div className='t1'><div className='t2 t2-1'>Numéro</div><div className='triangle'><img src={triangle} alt=""/></div></div>
-                  <div className='flex gap-x-2'><div className='t2 t2-2 '>Nom de <br/> l'Etablissement</div><div className='triangle'><img src={triangle} alt=""/></div></div>
+                  <div className='flex gap-x-2 ml-14'><div className='t2 t2-2 '>Nom de <br/> l'Etablissement</div><div className='triangle'><img src={triangle} alt=""/></div></div>
                   <div className='t1 ml-[8%] '><div className='t2 t2-3'>Lieu de <br/>l'Etablissement</div><div className='triangle'><img src={triangle} alt=""/></div></div>
                 </div>
               </div>
@@ -79,18 +112,18 @@ const Etablissement = () => {
                     <div className='flex' key={etab.id}>
                       <Link
                         className='line-contract1 flex w-[89%] hover:bg-[#FFF5DE]'
-                       to={`/g_etablissement/${etab.id}/${etab.nom}`}
+                       to={`/etablissements/${etab.id}/${etab.nom}`}
                         dir='ltr'
                       >
-                        <div className='flex justify-between w-1/3 flex-row-reverse'>
+                        <div className='flex justify-between w-1/2 flex-row-reverse'>
                           <div>{index + 1}</div>
                           <div>{etab.nom}</div>
                         </div>
                         <div className='text-left w-1/2'>
-                          <div className='model'>{etab.lieu}</div>
+                          <div className='models'>{etab.lieu}</div>
                         </div>
                       </Link>
-                      
+                    
                     </div>
                   ))}
               </div>

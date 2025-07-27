@@ -12,8 +12,11 @@ const db = new sqlite3.Database(dbPath, (err) => {
     console.log('Base SQLite connectée ✅');
   }
 });
-db.run("PRAGMA foreign_keys = ON");
-
+db.run("PRAGMA foreign_keys = ON", (err) => {
+  if (!err) {
+    console.log("Foreign keys activées ✅");
+  }
+});
 
 // Créer la table établissements si elle n'existe pas
 db.run(`CREATE TABLE IF NOT EXISTS etablissements (
@@ -29,19 +32,18 @@ db.run(`CREATE TABLE IF NOT EXISTS profs (
     FOREIGN KEY(etab_id) REFERENCES etablissements(id) ON DELETE CASCADE
 )`);
 db.run(`
- CREATE TABLE IF NOT EXISTS infoprofs (
+ CREATE TABLE IF NOT EXISTS info (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   prof_id INTEGER,
   nom TEXT,
   prenom TEXT,
-  grade TEXT,
+  echelon INTEGER,
   email TEXT,
-  telephone TEXT,
   situation TEXT,
   niveaux TEXT,
-  FOREIGN KEY(prof_id) REFERENCES profs(id),
-  FOREIGN KEY(etab_id) REFERENCES etablissements(id)
-);
+  derniereVisite TEXT,
+  note TEXT,
+  FOREIGN KEY(prof_id) REFERENCES profs(id) ON DELETE CASCADE);
 
 `);
  

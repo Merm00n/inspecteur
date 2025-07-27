@@ -13,6 +13,7 @@ import { useEffect } from 'react';
 
 function Prof() {
 
+
    
     const [openPop, setOpenPop] = useState(false);
 const { etabId, etab } = useParams();

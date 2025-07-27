@@ -65,7 +65,7 @@ import {
             </div>
     
             <div className="flex justify-center items-center">
-              <div className=" text-center text-[10pt] w-[70%] text-gray-500 ">  ZIAD Abderahmane Aziz</div>
+              <div className=" text-center text-[10pt] w-[70%] text-gray-500 ">  ZIAD Abderrahmane Aziz</div>
               
             </div>
           </div>
