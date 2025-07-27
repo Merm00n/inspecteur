@@ -1,0 +1,125 @@
+
+.content {
+    display: flex; 
+    align-items: center;
+    direction: rtl;
+
+}
+.Cont{
+    width: 87%;
+    height: 100%; 
+    overflow-y: auto; 
+
+}
+
+
+
+
+
+
+
+
+
+
+ @media screen  and (max-width:830px){
+    .icon-model{
+        display: none;
+    }
+    .btnchange,.btnrep,.btndel{
+        padding: 5% 15% 5% 10%;
+    }
+
+
+ }
+ 
+
+
+form{
+    width: 100%;
+}
+.input-info-1{
+    border-radius: 10px;
+    box-shadow: -2px 0px 8px 1px #DDB660;
+    border: none;
+    width: 80%;
+    margin-left: 3%;
+    padding: 1% 2%;
+    
+    
+    
+}
+.informations-contr{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    margin-right: 2.5%;
+   
+   
+}
+.input-info-contr{
+    border-radius: 10px;
+    padding: 3% 3% 3% 0;
+    width:80%;
+    box-shadow: -2px 0px 8px 1px #DDB660;
+    border: none;
+}
+
+.Pass{
+    margin: 2vw 1vw 2vw 0.5vw;
+
+}
+.info-contr{
+    border-radius: 10px;
+    box-shadow: -2px 0px 8px 1px #DDB660;
+    border: none;
+
+}
+
+.input-contr{
+    border-radius: 10px;
+    
+}
+.input-contr-1:focus{
+    outline: none;
+    background-color: #FFF5DE;
+   
+}
+.input-contr-1{
+    border-radius: 10px;
+    box-shadow: -2px 0px 8px 1px #DDB660;
+    border: none;
+    width:80%;
+  
+}
+
+.informations-contr-1{
+    border-radius: 10px;
+    box-shadow: -2px 0px 8px 1px #DDB660;
+    border: none;
+}
+.input-info-contr:focus{
+    outline: none;
+}
+.label-3{
+    color: #284A68;
+    font-weight: bold;
+    
+}
+.button2{
+    margin-left:8vw ;
+    background-color: #DDB660;
+    color: white;
+    border: none;
+    box-shadow: -2px 0px 8px 1px #DDB660;
+    border-radius: 8px;
+    font-size: 1.2em ;
+    text-decoration: none;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+
+}
+
+
+
+

@@ -40,7 +40,7 @@ import {
            
               <div className="link ">
                 <div className="l-ink">
-                  <NavLink className="navlink" to="/تحرير عقد">
+                  <NavLink className="navlink" to="/etablissements">
                     <div className="control">Etablissements</div>
                     <div className="icon-1  ">
                       <img src={logoContr} className="icon i3" />
@@ -64,13 +64,9 @@ import {
            
             </div>
     
-            <div className="foot">
-              <div className="admin-name ">  ZIAD Abderahmane Aziz</div>
-              <Link to="/" className="exit">
-                <button className="w-8">
-                  <img src={logoE} className="" />
-                </button>
-              </Link>
+            <div className="flex justify-center items-center">
+              <div className=" text-center text-[10pt] w-[70%] text-gray-500 ">  ZIAD Abderahmane Aziz</div>
+              
             </div>
           </div>
           </div>
