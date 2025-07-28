@@ -44,8 +44,8 @@ const { etabId, etab } = useParams();
         <div className='w-[200px]'>
             <SideBar />
         </div>
-        <div className='w-full'>
-        <div>
+        <div dir='rtl' className='w-full overflow-y-scroll'>
+        <div dir='ltr'>
             <div className='title'>
                 <div className='title-1'> Gestion </div>
             </div>

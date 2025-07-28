@@ -79,8 +79,8 @@ const { etabId, etab } = useParams();
         <div className='w-[200px]'>
             <SideBar />
         </div>
-        <div className='w-full'>
-        <div>
+        <div className='w-full overflow-y-scroll' dir='rtl'>
+        <div dir='ltr'>
             <div className='title'>
                 <div className='title-1'> Gestion </div>
             </div>
@@ -121,7 +121,7 @@ const { etabId, etab } = useParams();
                 </div>
             </div>
            
-            <div className='scrollbar' dir='rtl'>
+            <div className='' dir='rtl'>
                 {profs.filter(prof=>
                     prof.nom.toLowerCase().includes(result.toLowerCase())
                 ).map((prof, index) => (

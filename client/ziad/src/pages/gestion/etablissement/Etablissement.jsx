@@ -69,7 +69,7 @@ const Etablissement = () => {
         <div className='w-[200px]'>
           <SideBar />
         </div>
-        <div className='w-full flex flex-col'>
+        <div className='w-full overflow-y-scroll flex flex-col'>
 
           <div dir='rtl' className='container-AddContract'>
             <div className='title-contract'>

@@ -8,7 +8,8 @@ import Etablissement2 from './pages/consulter/etablissement/Etablissement';
 import Prof2 from './pages/consulter/prof/Prof';
 import InfoProf2 from './pages/consulter/infoProf/InfoProf';
 import { Toaster } from "react-hot-toast";
-  const routes = (
+import DisplayEmploi from './pages/consulter/infoProf/DisplayEmploi';
+const routes = (
     <Router>
       <Routes>
         <Route path="/" exact element={<Dashboard />} />
@@ -18,10 +19,7 @@ import { Toaster } from "react-hot-toast";
         <Route path='/etablissements' exact element={<Etablissement2 />} />
         <Route path='/etablissements/:etabId/:etab' exact element={<Prof2 />} />
         <Route path='/etablissements/:etabId/:etab/:profId/:prof' exact element={<InfoProf2 />} />
-
-        
-
-
+        <Route path='/etablissements/:etabId/:etab/:profId/:prof/emploi' exact element={<DisplayEmploi />} />
       </Routes>
     </Router>
 

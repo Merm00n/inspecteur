@@ -46,6 +46,15 @@ db.run(`
   FOREIGN KEY(prof_id) REFERENCES profs(id) ON DELETE CASCADE);
 
 `);
+db.run(`CREATE TABLE IF NOT EXISTS emploi_du_temps (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    prof_id INTEGER NOT NULL,
+    jour TEXT NOT NULL,
+    heure TEXT NOT NULL,
+    status INTEGER DEFAULT 1,
+    FOREIGN KEY (prof_id) REFERENCES profs(id) ON DELETE CASCADE
+);`
+);
  
 
 module.exports = db;

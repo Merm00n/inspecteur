@@ -109,10 +109,10 @@
     
 }
 ::-webkit-scrollbar-track{
-    background-color: #ffff
+    background-color: #ffffff
 }
 ::-webkit-scrollbar-thumb{
-    background-color: #DDB660;
+    background-color: #284A68;
     border-radius: 3px;
 }
 @media screen and (max-height:600px){
