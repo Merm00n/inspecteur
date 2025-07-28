@@ -61,7 +61,6 @@ const updateInfo = (req, res) => {
     }
 
 
-      // ✅ Si la ligne existe, on fait un UPDATE
       const updateSql = `
         UPDATE info
         SET nom = ?, prenom = ?, echelon = ?, email = ?, situation = ?, niveaux = ?, derniereVisite = ?, note = ?
@@ -81,6 +80,43 @@ const updateInfo = (req, res) => {
   });
 };
 
+const getCreneau = (req, res) => {
+  const {profId} = req.params;
+  db.all("SELECT jour, heure FROM emploi_du_temps WHERE prof_id = ?", [profId], (err, rows) => {
+        if (err) return res.status(500).json({ error: err.message });
+        res.json(rows);
+    });
+
+};
+
+const insertCreneau = (req, res) => {
+    const { profId } = req.params;
+    const { jour, heure } = req.body;
+
+    db.run(`INSERT INTO emploi_du_temps (prof_id, jour, heure) VALUES (?, ?, ?)`,
+        [profId, jour, heure],
+        function (err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ id: this.lastID });
+        }
+    );
+};
+
+const deleteCreneau = (req, res) => {
+    const { profId } = req.params;
+    const { jour, heure } = req.body;
+
+    db.run(`DELETE FROM emploi_du_temps WHERE prof_id = ? AND jour = ? AND heure = ?`,
+        [profId, jour, heure],
+        function (err) {
+            if (err) return res.status(500).json({ error: err.message });
+            res.json({ deleted: this.changes });
+        }
+    );
+};
 
 
-module.exports = {addInfo,getInfo,updateInfo}
+
+
+
+module.exports = {addInfo,getInfo,updateInfo,getCreneau,insertCreneau,deleteCreneau}

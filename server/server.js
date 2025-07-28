@@ -4,7 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
 const { addProf, getProf, deletProf } = require('./routes/profRoutes');
-const { addInfo, getInfo,updateInfo } = require ('./routes/infoProf');
+const { addInfo, getInfo,updateInfo,getCreneau,insertCreneau,deleteCreneau } = require ('./routes/infoProf');
 const db = require('./db');
 
 
@@ -36,7 +36,10 @@ app.get('/all-prof/:etabId', getProf);
 app.delete('/delete-prof/:id', deletProf);
 app.post('/add-info/:profId', addInfo);
 app.get('/get-info/:profId', getInfo);
-app.put('/update-info/:profId',updateInfo ); // Utilisé pour la mise à jour
+app.put('/update-info/:profId',updateInfo ); 
+app.get('/get-creneau/:profId', getCreneau);
+app.post('/insert-creneau/:profId', insertCreneau);
+app.delete('/delete-creneau/:profId', deleteCreneau);
 // app.get('/delete-table3', (req, res) => {
 //   db.run("DROP TABLE IF EXISTS info", (err) => {
 //     if (err) {

@@ -5,6 +5,7 @@ import "./infoprof.css";
 import SideBar from "../../../components/SideBar/SideBar";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Emploi from "../../../components/gestionInfo/Emploi";
 
 function InfoProf() {
   const { etabId, etab, profId, prof } = useParams();
@@ -102,7 +103,6 @@ function InfoProf() {
     }
   };
 
-  // ✅ Modifier les infos
   const handleUpdate = async () => {
     if (!validateForm()) return;
 
@@ -280,6 +280,11 @@ function InfoProf() {
             </div>
           </div>
         </div>
+      <div className="w-full flex justify-center ">
+        <div className="w-[90%]">
+        <Emploi profId={profId} />
+        </div>
+      </div>
       </div>
     </div>
   );

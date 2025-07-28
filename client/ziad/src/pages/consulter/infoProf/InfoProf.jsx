@@ -98,7 +98,7 @@ function InfoProf() {
                     <div className="text-[#284A68] mb-3">Email : {info.email}</div>
                     <div className="text-[#284A68]">Situation : {info.situation}</div>
 
-                    <div className="flex gap-x-10 items-center text-[#284A68]">
+                    <div className="flex gap-x-16 items-center text-[#284A68]">
                       <div>Dernière Visite : {info.derniereVisite}</div>
 <div className="relative border border-[#DDB660] rounded-md text-[#866829] px-6 py-3 font-semibold overflow-hidden animate-gradient">
   <span className="relative z-10">Note : {info.note}</span>
@@ -126,8 +126,7 @@ function InfoProf() {
             </div>
             <div className="w-[30%]  flex flex-col gap-y-6 justify-center items-center">
                 <Link src={`/etablissements/${etabId}/${etab}/${prof.id}/${prof.nom}`} className='hover:bg-[#DDB660] font-bold border-2 flex border-[#DDB660] justify-center text-[#DDB660] hover:text-white rounded-md drop-shadow-xl w-52 py-5 text text-2xl'  >Informations</Link>
-                <Link src="/emploi du temps" className=' flex justify-center text-[#284A62]  font-bold text2 rounded-md drop-shadow-2xl hover:bg-[#284A62] hover:text-white w-52 py-5 text-2xl' >Emploi du temps</Link>
-              
+               <Link to={`/etablissements/${etabId}/${etab}/${profId}/${prof}/emploi`} className=' flex justify-center text-[#284A62]  font-bold text2 rounded-md drop-shadow-2xl hover:bg-[#284A62] hover:text-white w-52 py-5 text-2xl' >Emploi du temps</Link>
             </div>
             </div>
           </div>

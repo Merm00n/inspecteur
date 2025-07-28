@@ -112,7 +112,7 @@
     background-color: #ffff
 }
 ::-webkit-scrollbar-thumb{
-    background-color: #DDB660;
+    background-color: #284A68;
     border-radius: 3px;
 }
 @media screen and (max-height:600px){
