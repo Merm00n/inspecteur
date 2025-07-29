@@ -29,8 +29,15 @@ const heures = ["08:00 - 09:00", "09:00 - 10:00","10:00 - 11:00", "11:00 - 12:00
         <div className="w-full flex flex-col">
           <div className="container-clients" dir="rtl">
             {/* ✅ Titre */}
-            <div className="title-clt">
-              <div className="title-1-clt">Etablissement</div>
+            <div className="title flex justify-between" dir="rtl">
+              
+              <div className="title-1">Etablissements</div>
+ <div className="flex gap-x-4 ml-36">
+ <Link to={`/etablissements/${etabId}/${etab}/${profId}/${prof}`} className='hover:bg-[#DDB660] font-bold border-2 flex border-[#DDB660] justify-center text-[#DDB660] hover:text-white rounded-md drop-shadow-xl w-40 py-5 text-lg'  >Informations</Link>
+        
+            <Link to={`/etablissements/${etabId}/${etab}/${profId}/${prof}/emploi`} className='flex justify-center text-[#284A62] font-bold text2 rounded-md drop-shadow-2xl hover:bg-[#284A62] hover:text-white w-40 py-5 text-lg'  >Emploi du temps</Link>
+           <Link to={`/etablissements/${etabId}/${etab}/${profId}/${prof}/pdf`} className="flex justify-center text-[#284A62] font-bold text2 rounded-md drop-shadow-2xl hover:bg-[#284A62] hover:text-white w-40 py-5 text-lg" >Documents</Link>
+            </div>
             </div>
 
             {/* ✅ Fil d'ariane */}
@@ -49,11 +56,9 @@ const heures = ["08:00 - 09:00", "09:00 - 10:00","10:00 - 11:00", "11:00 - 12:00
               </div>
               <div className="lien">{prof}</div>
                
-               <div className="  flex  gap-x-6 justify-center items-center mr-14">
-                <Link to={`/etablissements/${etabId}/${etab}/${profId}/${prof}`} className='hover:bg-[#DDB660] font-bold border-2 flex border-[#DDB660] justify-center text-[#DDB660] hover:text-white rounded-md drop-shadow-xl w-44 py-5 text-xl'  >Informations</Link>
-                <Link src={`/etablissements/${etabId}/${etab}/${prof.id}/${prof.nom}/emploi`} className=' flex justify-center text-[#284A62]  font-bold text2 rounded-md drop-shadow-2xl hover:bg-[#284A62] hover:text-white w-44 py-5 text-xl' >Emploi du temps</Link>
-              
-            </div>
+               <div className="  flex  gap-x-3 justify-center items-center ">
+
+             </div>
             </div>
 
 
@@ -95,12 +100,19 @@ const heures = ["08:00 - 09:00", "09:00 - 10:00","10:00 - 11:00", "11:00 - 12:00
                             {jours.map(j => {
                                 const active = emploi.some(e => e.jour === j && e.heure === h);
                                 return (
-                                    <td
+                                   <td
     key={j + h}
-    className={`border transition-all duration-300 h-20 w-32 rounded-md shadow-md 
+    className={`border transition-all duration-300 h-20 w-32 rounded-md shadow-md  items-center justify-center
         ${active ? "bg-[#284A62]" : "bg-white "}
     `}
-></td>
+>
+    {active && (
+        <span className="text-white font-semibold">
+            {emploi.find(e => e.jour === j && e.heure === h)?.texte || ""}
+        </span>
+    )}
+</td>
+
 
                                 );
                             })}

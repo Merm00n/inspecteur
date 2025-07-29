@@ -51,10 +51,20 @@ db.run(`CREATE TABLE IF NOT EXISTS emploi_du_temps (
     prof_id INTEGER NOT NULL,
     jour TEXT NOT NULL,
     heure TEXT NOT NULL,
+    texte TEXT,
     status INTEGER DEFAULT 1,
     FOREIGN KEY (prof_id) REFERENCES profs(id) ON DELETE CASCADE
 );`
 );
+
+db.run(`CREATE TABLE IF NOT EXISTS pdf (
+  id INTEGER PRIMARY KEY AUTOINCREMENT ,
+  title TEXT,
+  file_path TEXT,
+  prof_id INTEGER NOT NULL,
+  FOREIGN KEY (prof_id)  REFERENCES profs(id) ON DELETE CASCADE
+  
+  );`);
  
 
 module.exports = db;

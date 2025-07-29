@@ -59,8 +59,8 @@ function InfoProf() {
         <div className="w-full flex flex-col">
           <div className="container-clients" dir="rtl">
             {/* ✅ Titre */}
-            <div className="title-clt">
-              <div className="title-1-clt">Etablissement</div>
+            <div className="title" dir="ltr">
+              <div className="title-1">Etablissements</div>
             </div>
 
             {/* ✅ Fil d'ariane */}
@@ -117,7 +117,7 @@ function InfoProf() {
                             <div className="text-4xl">{info.echelon}</div>
                           </div>
                         </div>
-                        <div className="mr-4 text-center text-2xl text-[#284A62]">Echelon</div>
+                        <div className="mr-4 mt-3 text-center text-2xl text-[#284A62]">Echelon</div>
                       </div>
                     </div>
                   </div>
@@ -125,8 +125,10 @@ function InfoProf() {
               )}
             </div>
             <div className="w-[30%]  flex flex-col gap-y-6 justify-center items-center">
-                <Link src={`/etablissements/${etabId}/${etab}/${prof.id}/${prof.nom}`} className='hover:bg-[#DDB660] font-bold border-2 flex border-[#DDB660] justify-center text-[#DDB660] hover:text-white rounded-md drop-shadow-xl w-52 py-5 text text-2xl'  >Informations</Link>
-               <Link to={`/etablissements/${etabId}/${etab}/${profId}/${prof}/emploi`} className=' flex justify-center text-[#284A62]  font-bold text2 rounded-md drop-shadow-2xl hover:bg-[#284A62] hover:text-white w-52 py-5 text-2xl' >Emploi du temps</Link>
+              <Link src={`/etablissements/${etabId}/${etab}/${prof.id}/${prof.nom}`} className='hover:bg-[#DDB660] font-bold border-2 flex border-[#DDB660] justify-center text-[#DDB660] hover:text-white rounded-md drop-shadow-xl w-52 py-5 text text-2xl'  >Informations</Link>
+              <Link to={`/etablissements/${etabId}/${etab}/${profId}/${prof}/emploi`} className=' flex justify-center text-[#284A62]  font-bold text2 rounded-md drop-shadow-2xl hover:bg-[#284A62] hover:text-white w-52 py-5 text-2xl' >Emploi du temps</Link>
+              <Link to={`/etablissements/${etabId}/${etab}/${profId}/${prof}/pdf`} className=' flex justify-center text-[#284A62]  font-bold text2 rounded-md drop-shadow-2xl hover:bg-[#284A62] hover:text-white w-52 py-5 text-2xl' >Documents</Link>
+
             </div>
             </div>
           </div>

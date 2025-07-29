@@ -72,8 +72,8 @@ const Etablissement = () => {
         <div className='w-full overflow-y-scroll flex flex-col'>
 
           <div dir='rtl' className='container-AddContract'>
-            <div className='title-contract'>
-              <div className='title-1-contract'>Gestion</div>
+            <div className='title' dir='ltr'>
+              <div className='title-1'>Etablissements</div>
             </div>
 
             <div className="soustitre-contract">Les Etablissements</div>
