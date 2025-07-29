@@ -47,7 +47,7 @@ const { etabId, etab } = useParams();
         <div dir='rtl' className='w-full overflow-y-scroll'>
         <div dir='ltr'>
             <div className='title'>
-                <div className='title-1'> Gestion </div>
+                <div className='title-1'> Etablissements </div>
             </div>
             <div>
                 <div className="content">

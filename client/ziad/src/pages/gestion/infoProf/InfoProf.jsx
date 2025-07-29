@@ -6,6 +6,7 @@ import SideBar from "../../../components/SideBar/SideBar";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Emploi from "../../../components/gestionInfo/Emploi";
+import AddPdf from "../../../components/addPdf/AddPdf";
 
 function InfoProf() {
   const { etabId, etab, profId, prof } = useParams();
@@ -19,6 +20,8 @@ function InfoProf() {
   const [situation, setSituation] = useState("");
   const [niveaux, setNiveaux] = useState([]);
   const [isUpdate, setIsUpdate] = useState(false);
+  const [openPop, setOpenPop] = useState(false);
+  
 
   // ✅ Vérifier si des infos existent
   useEffect(() => {
@@ -156,15 +159,20 @@ function InfoProf() {
         <div className="flex" dir="ltr">
           <div className="flex flex-col w-1/5 gap-y-6 justify-center items-center">
             {!isUpdate && (
-              <button className="button2 w-52 py-3" onClick={handleSave}>
+              <button className="button2 hover:bg-white hover:text-[#DDB660] w-52 py-3" onClick={handleSave}>
                 Enregistrer
               </button>
             )}
             {isUpdate && (
-              <button className="button2 w-52 py-3" onClick={handleUpdate}>
+              <button className="button2 hover:bg-white hover:text-[#DDB660] w-52 py-3" onClick={handleUpdate}>
                 Enregistrer les modifications
               </button>
             )}
+            <div className="button2 hover:bg-white hover:text-[#DDB660] w-52 py-3">
+                 <button className="w-full" onClick={() => {setOpenPop(true)}}>Ajouter <br /> Des Documents</button> 
+                {openPop && <AddPdf open={openPop} onClose = {() => {setOpenPop(false)}} profId={profId} />
+}
+            </div>
           </div>
 
           <div className="w-full flex justify-center items-center" dir="ltr">

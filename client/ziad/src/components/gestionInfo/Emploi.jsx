@@ -6,25 +6,40 @@ const heures = ["08:00 - 09:00", "09:00 - 10:00","10:00 - 11:00", "11:00 - 12:00
 
 const Emploi = ({ profId }) => {
     const [emploi, setEmploi] = useState([]);
+    const [editing, setEditing] = useState(null); // {jour, heure}
 
     useEffect(() => {
         axios.get(`http://localhost:5000/get-creneau/${profId}`).then(res => {
+            console.log(res.data);
             setEmploi(res.data);
         });
     }, [profId]);
 
-    const toggleCase = async (jour, heure) => {
-        const exists = emploi.some(e => e.jour === jour && e.heure === heure);
+    const handleClick = (jour, heure) => {
+        const exists = emploi.find(e => e.jour === jour && e.heure === heure);
+        if (!exists) {
+            setEmploi([...emploi, { jour, heure, texte: "" }]);
+        }
+        setEditing({ jour, heure });
+    };
 
-        if (exists) {
+    const handleBlur = async (jour, heure, texte) => {
+        setEditing(null);
+        const exists = emploi.find(e => e.jour === jour && e.heure === heure);
+
+        if (exists && texte.trim() === "") {
             await axios.delete(`http://localhost:5000/delete-creneau/${profId}`, {
                 data: { jour, heure }
             });
             setEmploi(emploi.filter(e => !(e.jour === jour && e.heure === heure)));
         } else {
-            await axios.post(`http://localhost:5000/insert-creneau/${profId}`, { jour, heure });
-            setEmploi([...emploi, { jour, heure }]);
+            await axios.post(`http://localhost:5000/insert-creneau/${profId}`, { jour, heure, texte });
+            setEmploi(emploi.map(e => (e.jour === jour && e.heure === heure ? { ...e, texte } : e)));
         }
+    };
+
+    const handleChange = (jour, heure, value) => {
+        setEmploi(emploi.map(e => (e.jour === jour && e.heure === heure ? { ...e, texte: value } : e)));
     };
 
     return (
@@ -32,7 +47,7 @@ const Emploi = ({ profId }) => {
             <table
                 dir="ltr"
                 className="border-separate w-full text-center"
-                style={{ borderSpacing: '8px 8px' }} // 8px horizontal + 8px vertical
+                style={{ borderSpacing: '8px 8px' }}
             >
                 <thead>
                     <tr>
@@ -56,16 +71,32 @@ const Emploi = ({ profId }) => {
                                 {h}
                             </td>
                             {jours.map(j => {
-                                const active = emploi.some(e => e.jour === j && e.heure === h);
+                                const item = emploi.find(e => e.jour === j && e.heure === h);
+                                const active = !!item;
+                                const isEditing = editing && editing.jour === j && editing.heure === h;
                                 return (
                                     <td
-    key={j + h}
-    className={`border cursor-pointer transition-all duration-300 h-20 w-32 rounded-md shadow-md 
-        ${active ? "bg-[#284A62]" : "bg-white hover:bg-[#284A62]"}
-    `}
-    onClick={() => toggleCase(j, h)}
-></td>
-
+                                        key={j + h}
+                                        className={`border cursor-pointer transition-all duration-300 h-20 w-32 rounded-md shadow-md  items-center justify-center
+                                            ${active ? "bg-[#284A62]" : "bg-white hover:bg-[#284A62]/50"}
+                                        `}
+                                        onClick={() => handleClick(j, h)}
+                                    >
+                                        {isEditing ? (
+                                            <input
+                                                type="text"
+                                                className="bg-transparent text-white text-center outline-none w-full"
+                                                value={item?.texte || ""}
+                                                onChange={(e) => handleChange(j, h, e.target.value)}
+                                                onBlur={() => handleBlur(j, h, item?.texte || "")}
+                                                autoFocus
+                                            />
+                                        ) : (
+                                            active && (
+                                                <span className="text-white font-semibold">{item.texte}</span>
+                                            )
+                                        )}
+                                    </td>
                                 );
                             })}
                         </tr>

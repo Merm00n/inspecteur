@@ -81,32 +81,61 @@ const updateInfo = (req, res) => {
 };
 
 const getCreneau = (req, res) => {
-  const {profId} = req.params;
-  db.all("SELECT jour, heure FROM emploi_du_temps WHERE prof_id = ?", [profId], (err, rows) => {
-        if (err) return res.status(500).json({ error: err.message });
-        res.json(rows);
-    });
-
-};
-
-const insertCreneau = (req, res) => {
     const { profId } = req.params;
-    const { jour, heure } = req.body;
-
-    db.run(`INSERT INTO emploi_du_temps (prof_id, jour, heure) VALUES (?, ?, ?)`,
-        [profId, jour, heure],
-        function (err) {
+    db.all(
+        "SELECT jour, heure, texte FROM emploi_du_temps WHERE prof_id = ?",
+        [profId],
+        (err, rows) => {
             if (err) return res.status(500).json({ error: err.message });
-            res.json({ id: this.lastID });
+            res.json(rows);
         }
     );
 };
+
+
+const insertCreneau = (req, res) => {
+    const { profId } = req.params;
+    const { jour, heure, texte } = req.body;
+
+    db.get(
+        `SELECT id FROM emploi_du_temps WHERE prof_id = ? AND jour = ? AND heure = ?`,
+        [profId, jour, heure],
+        (err, row) => {
+            if (err) return res.status(500).json({ error: err.message });
+
+            if (row) {
+                // Si existe → update
+                db.run(
+                    `UPDATE emploi_du_temps SET texte = ? WHERE id = ?`,
+                    [texte, row.id],
+                    function (err) {
+                        if (err) return res.status(500).json({ error: err.message });
+                        res.json({ updated: this.changes });
+                    }
+                );
+            } else {
+                // Sinon → insert
+                db.run(
+                    `INSERT INTO emploi_du_temps (prof_id, jour, heure, texte) VALUES (?, ?, ?, ?)`,
+                    [profId, jour, heure, texte],
+                    function (err) {
+                        if (err) return res.status(500).json({ error: err.message });
+                        res.json({ id: this.lastID });
+                    }
+                );
+            }
+        }
+    );
+};
+
+
 
 const deleteCreneau = (req, res) => {
     const { profId } = req.params;
     const { jour, heure } = req.body;
 
-    db.run(`DELETE FROM emploi_du_temps WHERE prof_id = ? AND jour = ? AND heure = ?`,
+    db.run(
+        `DELETE FROM emploi_du_temps WHERE prof_id = ? AND jour = ? AND heure = ?`,
         [profId, jour, heure],
         function (err) {
             if (err) return res.status(500).json({ error: err.message });
@@ -114,6 +143,7 @@ const deleteCreneau = (req, res) => {
         }
     );
 };
+
 
 
 

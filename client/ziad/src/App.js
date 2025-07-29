@@ -9,6 +9,7 @@ import Prof2 from './pages/consulter/prof/Prof';
 import InfoProf2 from './pages/consulter/infoProf/InfoProf';
 import { Toaster } from "react-hot-toast";
 import DisplayEmploi from './pages/consulter/infoProf/DisplayEmploi';
+import DisplayPdf from './pages/consulter/infoProf/DisplayPdf';
 const routes = (
     <Router>
       <Routes>
@@ -20,6 +21,7 @@ const routes = (
         <Route path='/etablissements/:etabId/:etab' exact element={<Prof2 />} />
         <Route path='/etablissements/:etabId/:etab/:profId/:prof' exact element={<InfoProf2 />} />
         <Route path='/etablissements/:etabId/:etab/:profId/:prof/emploi' exact element={<DisplayEmploi />} />
+        <Route path='/etablissements/:etabId/:etab/:profId/:prof/pdf' exact element={<DisplayPdf />} />
       </Routes>
     </Router>
 
