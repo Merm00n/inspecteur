@@ -3,32 +3,29 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-const { getPdf } = require('./routes/pdf');
+const { getPdf,deletePdf } = require('./routes/pdf');
 const { addProf, getProf, deletProf } = require('./routes/profRoutes');
 const { addInfo, getInfo,updateInfo,getCreneau,insertCreneau,deleteCreneau } = require ('./routes/infoProf');
 const db = require('./db');
 const multer  = require('multer')
 
-// Import des fonctions
 const { addEtablissement, getAllEtablissements, deleteEtablissement } = require('./routes/etabRoutes');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middlewares
 app.use(bodyParser.json());
 app.use(cors({
-  origin: 'http://localhost:3000', // ton frontend
+  origin: 'http://localhost:3000', 
   credentials: true
 }));
 
-// Création du dossier data si inexistant
 const baseDir = path.join(__dirname, 'data');
 if (!fs.existsSync(baseDir)) {
   fs.mkdirSync(baseDir, { recursive: true });
 }
 
-// ✅ Définition des routes
+
 app.post('/add', addEtablissement);
 app.get('/all', getAllEtablissements);
 app.delete('/delete/:id', deleteEtablissement);
@@ -49,7 +46,7 @@ app.use('/files', express.static(path.join(__dirname, 'files')));
 //     if (err) {
 //       return res.status(500).json({ error: "Erreur suppression table", err });
 //     }
-//     res.json({ message: "Table infoprofs supprimée ✅" });
+//     res.json({ message: "Table infoprofs supprimée " });
 //   });
 // });
 
@@ -59,7 +56,7 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     const uniqueSuffix = Date.now() 
-    cb(null,  uniqueSuffix+file.originalname) // Remplace les espaces par des tirets et met en minuscule
+    cb(null,  uniqueSuffix+file.originalname) 
   }
 })
 const upload = multer({ storage: storage })
@@ -84,6 +81,8 @@ app.post('/upload-file/:profId', upload.single('file'), async (req, res) => {
  
 
 })
+
+app.delete('/delete-pdf/:pdfId', deletePdf);
 
 
 

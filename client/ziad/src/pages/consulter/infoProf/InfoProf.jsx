@@ -124,8 +124,8 @@ function InfoProf() {
                 </div>
               )}
             </div>
-            <div className="w-[30%]  flex flex-col gap-y-6 justify-center items-center">
-              <Link src={`/etablissements/${etabId}/${etab}/${prof.id}/${prof.nom}`} className='hover:bg-[#DDB660] font-bold border-2 flex border-[#DDB660] justify-center text-[#DDB660] hover:text-white rounded-md drop-shadow-xl w-52 py-5 text text-2xl'  >Informations</Link>
+            <div className="w-[30%]  flex flex-col gap-y-6 mt-32">
+              <Link src={`/etablissements/${etabId}/${etab}/${prof.id}/${prof.nom}`} className='hover:bg-[#DDB660] drop-shadow-2xl font-bold border-2 flex border-[#DDB660] justify-center text-[#DDB660] hover:text-white rounded-md  w-52 py-5 text text-2xl'  >Informations</Link>
               <Link to={`/etablissements/${etabId}/${etab}/${profId}/${prof}/emploi`} className=' flex justify-center text-[#284A62]  font-bold text2 rounded-md drop-shadow-2xl hover:bg-[#284A62] hover:text-white w-52 py-5 text-2xl' >Emploi du temps</Link>
               <Link to={`/etablissements/${etabId}/${etab}/${profId}/${prof}/pdf`} className=' flex justify-center text-[#284A62]  font-bold text2 rounded-md drop-shadow-2xl hover:bg-[#284A62] hover:text-white w-52 py-5 text-2xl' >Documents</Link>
 

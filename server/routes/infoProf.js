@@ -21,7 +21,7 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)
         return res.status(500).json({error: "Erreur lors de l'ajout des informations du professeur",err});      
 
     }
-    res.status(201).json({message: "Informations du professeur ajoutées ✅", id: this.lastID});
+    res.status(201).json({message: "Informations du professeur ajoutées ", id: this.lastID});
 
 } );
 }
@@ -52,7 +52,6 @@ const updateInfo = (req, res) => {
     return res.status(400).json({ error: "Remplir tous les champs" });
   }
 
-  // Vérifier si une ligne existe déjà pour ce prof
   const checkSql = `SELECT id FROM info WHERE prof_id = ?`;
   db.get(checkSql, [profId], (err, row) => {
     if (err) {
@@ -71,7 +70,7 @@ const updateInfo = (req, res) => {
           console.error("Erreur update info :", err);
           return res.status(500).json({ error: "Erreur lors de la mise à jour" });
         }
-        return res.status(200).json({ message: "Informations mises à jour ✅" });
+        return res.status(200).json({ message: "Informations mises à jour " });
       });
    
 
@@ -104,7 +103,8 @@ const insertCreneau = (req, res) => {
             if (err) return res.status(500).json({ error: err.message });
 
             if (row) {
-                // Si existe → update
+               
+              
                 db.run(
                     `UPDATE emploi_du_temps SET texte = ? WHERE id = ?`,
                     [texte, row.id],
@@ -114,7 +114,8 @@ const insertCreneau = (req, res) => {
                     }
                 );
             } else {
-                // Sinon → insert
+                
+
                 db.run(
                     `INSERT INTO emploi_du_temps (prof_id, jour, heure, texte) VALUES (?, ?, ?, ?)`,
                     [profId, jour, heure, texte],

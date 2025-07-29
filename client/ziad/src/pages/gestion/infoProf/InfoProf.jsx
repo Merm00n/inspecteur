@@ -251,8 +251,8 @@ function InfoProf() {
                 {/* Situation administrative */}
                 <div className="items-start w-full">
                   <label className="label-3 text-[14pt] w-[30%] mt-1">Situation administrative</label>
-                  <div className="w-[70%] flex justify-around mt-3 gap-1">
-                    {["Titulaire", "Vacataire", "En stage"].map((option) => (
+                  <div className="w-[90%] flex justify-around mt-3 gap-1">
+                    {["Titulaire", "Vacataire", "En stage", "Suppléant(e)"].map((option) => (
                       <label key={option} className="flex items-center gap-2">
                         <input
                           type="radio"

@@ -4,13 +4,16 @@ import toast from 'react-hot-toast';
 
 const AddPdf = ({ open, onClose, profId }) => {
      const [title, setTitle] = useState("");
-     const [file, setFile] = useState("");
+     const [file, setFile] = useState(null);
 
      const onSubmit = async(e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("title",title);
+        console.log("Type de fichier:", typeof file, file);
         formData.append("file", file);
+        console.log("FormData:", title, file);
+        console.log("ProfId:", profId);
 
         try {
             await axios.post(`http://localhost:5000/upload-file/${profId}`, formData, {
@@ -77,4 +80,4 @@ const AddPdf = ({ open, onClose, profId }) => {
   )
 }
 
-export default AddPdf
+export default AddPdf;
