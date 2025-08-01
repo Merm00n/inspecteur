@@ -13,7 +13,7 @@ function DisplayPdf() {
   const [visiblePdfIndex, setVisiblePdfIndex] = useState(null); // index du PDF visible
   const { etabId, etab, profId, prof } = useParams();
 
-  useEffect(() => {
+
     const fetchPdfs = async (e) => {
       try {
         const response = await axios.get(`http://localhost:5000/getPdf/${profId}`);
@@ -24,6 +24,7 @@ function DisplayPdf() {
         console.error("Erreur lors de la récupération des PDFs:", error);
       }
     };
+ useEffect(() => {
 
     fetchPdfs();
 
@@ -34,6 +35,39 @@ function DisplayPdf() {
 
   const togglePdf = (index) => {
     setVisiblePdfIndex(prevIndex => prevIndex === index ? null : index);
+  };
+
+   const handleDelete = (id) => {
+   
+    toast((t) => (
+      <div className="text-center">
+        <p className="font-semibold mb-2">Supprimer ce PDF ?</p>
+        <div className="flex justify-center gap-4 mt-2">
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              toast.promise(
+                axios.delete(`http://localhost:5000/delete-pdf/${id}`),
+                {
+                  loading: "Suppression en cours...",
+                  success: "PDF supprimé ✅",
+                  error: "Erreur lors de la suppression ❌",
+                }
+              ).then(() => fetchPdfs());
+            }}
+            className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+          >
+            Oui
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="bg-gray-300 px-3 py-1 rounded hover:bg-gray-400"
+          >
+            Non
+          </button>
+        </div>
+      </div>
+    ), { duration: 4000 });
   };
 
   return (
@@ -99,7 +133,7 @@ function DisplayPdf() {
               {visiblePdfIndex === index ? "Masquer PDF" : "Afficher PDF"}
             </button>
               <button >
-                   <img src={supp} className='w-[30px]' alt="Supprimer" />
+                   <img src={supp} onClick={()=> {handleDelete(pdf.id)}} className='w-[30px]' alt="Supprimer" />
               </button>
               </div>
           </div>
